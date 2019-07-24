@@ -1,0 +1,70 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes"  access="global" controller="PhotoAlbumChatterComponentCtrl">
+    <!-->All the Atrributes for the component</-->
+    <aura:attribute name="keylist" type="List" access="PUBLIC"/>
+    <aura:attribute name="map" type="map" access="PUBLIC"/>
+    <aura:attribute name="text" type="String" access="PUBLIC"/>
+    <aura:attribute name="docname" type="String" access="PUBLIC"/>
+    <aura:attribute name="ID" type="String" access="PUBLIC"/>
+    <aura:attribute name="description" type="String" access="PUBLIC"/>
+    <aura:attribute name="url" type="List" access="PUBLIC"/>
+    <aura:attribute name="title" type="List" access="PUBLIC"/>
+    <aura:attribute name="wrapper" type="List" access="PUBLIC"/>
+    <aura:attribute name="parentId" type="Id"  />
+    <aura:attribute name="showLoadingSpinner" type="boolean" default="false" />
+    <aura:attribute name="fileName" type="String" default="No File Selected.." />
+    <aura:attribute name="multiple" type="Boolean" default="false"/>
+    <aura:attribute name="disabled" type="Boolean" default="false"/>
+    <aura:attribute name="dataLoaded" type="Boolean" default="false"/>
+    <!-->Handler init method </--> 
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+    <div class="slds-theme_default">
+        <div class="slds-wrap slds-scrollable_y slds-p-around_large">
+            <div class="slds-align_absolute-center">
+                <button class="slds-button slds-button_brand " Style="width:100%; max-width:100% " onclick="{!c.upload}">Share an Update</button>
+            </div><br></br>
+            <aura:if isTrue="{!v.dataLoaded}">
+                <aura:iteration items="{!v.keylist}" var="key">
+                    <!--Calling child component ChatterSection-->
+                    <c:PhotoAlbumChatterSection key="{!key}" map="{!v.map}" />
+                </aura:iteration>
+            </aura:if>
+        </div>
+        
+        <!-->Using Modal for image posting on chatter </-->
+        <div class="demo-only slds-hide" style="height: 640px;" aura:id="upload">
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close">
+                            <span class="slds-assistive-text">Close</span>
+                        </button>
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">POST CHATTER</h2>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <!-->Using standard lightning fileupload component</-->
+                        <lightning:fileUpload name="fileUploader"
+                                              label= "Post Chatter"
+                                              multiple="{!v.multiple}"
+                                              disabled="{!v.disabled}"
+                                              recordId="{!v.recordId}"
+                                              onuploadfinished="{! c.handleUploadFinished }"/>
+                        
+                        
+                        <br></br>
+                        <!-->textarea for writing the details along with image</-->
+                        <div class="slds-form-element">
+                            <label class="slds-form-element__label" for="textarea-id-01">DESCRIPTION</label>
+                            <div class="slds-form-element__control">
+                                <textarea aura:id="message-input" id="message-input" class="slds-textarea" placeholder="Add Hashtag about the image..."></textarea> 
+                            </div>
+                        </div> 
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <button class="slds-button slds-button_brand" onclick="{!c.doSave}">Post</button> 
+                        <button class="slds-button slds-button_brand" onclick="{!c.cancel}">Cancel</button>
+                    </footer>
+                </div>
+            </section>
+        </div>
+    </div>
+</aura:component>

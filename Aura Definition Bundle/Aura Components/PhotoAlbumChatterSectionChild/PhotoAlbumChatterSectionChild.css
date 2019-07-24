@@ -1,0 +1,11 @@
+.THIS .slds-grid {
+	flex-direction: row !important;
+    flex-wrap: wrap !important;
+}
+
+/*.THIS figure {
+    width:100px;
+}
+.THIS .forceContentFileCard{
+   width:105px !important; 
+}*/

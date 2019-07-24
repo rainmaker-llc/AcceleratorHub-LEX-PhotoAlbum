@@ -1,0 +1,24 @@
+<aura:component >
+    <aura:attribute name="sectionIcon" type="String" default="utility:right"/>
+    <aura:attribute name="key" type="String" access="PUBLIC"/>
+    <aura:attribute name="map" type="map" access="PUBLIC"/>
+    
+	<div class="slds-section" aura:id="section-main">
+        <h3 class="slds-section__title">
+            <button aria-controls="expando-unique-id" aria-expanded="true" class="slds-button slds-section__title-action" onclick="{!c.toggleSection}">
+                <lightning:icon iconName="{!v.sectionIcon}" size="xx-small" />
+                <span class="slds-truncate" title="Section Title">
+                    <aura:if isTrue="{! v.map != null}" > 
+                        <!-->Calling Child Component ChatterChildComponent</-->
+                        <c:PhotoAlbumChatterSectionChild key="{!v.key}" map="{!v.map}" />
+                    </aura:if>
+                </span>
+            </button>
+        </h3>
+        <div aria-hidden="false" class="slds-section__content" id="expando-unique-id">
+            <aura:if isTrue="{! v.map != null}" >
+                <c:PhotoAlbumChatterSectionChild key="{!v.key}" map="{!v.map}" check="check"/>
+            </aura:if>
+        </div>
+    </div>
+</aura:component>

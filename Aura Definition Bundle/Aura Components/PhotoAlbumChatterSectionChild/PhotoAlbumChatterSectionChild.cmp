@@ -1,0 +1,24 @@
+<aura:component >
+    <aura:attribute name="map" type="map" access="PUBLIC"/>
+    <aura:attribute name="key" type="string"/>
+    <aura:attribute name="value" type="List"/>
+    <aura:attribute name="imgsrc" type="string"/>
+    <aura:attribute name="header" type="string"/>
+    <aura:attribute name="check" type="string"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:if isTrue="{! v.check == null}" > 
+        <h3>{!v.key}</h3>
+        <aura:set attribute="else">
+            <div class="slds-grid slds-gutters slds-scrollable_y slds-p-around_large">
+                <aura:iteration items="{!v.value}" var="val">
+                    <div class="slds-col slds-p-around_small">
+                     <lightning:fileCard fileId="{!val.details}" />
+                     </div>
+                </aura:iteration>
+                
+            </div>
+        </aura:set>
+    </aura:if>  
+    
+    
+</aura:component>
